@@ -1,0 +1,63 @@
+﻿<Window x:Class="NodeRevitAddins.ExternalCommands.LightingVentCalcs.LightingAndVentUI"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NodeRevitAddins.ExternalCommands.LightingVentCalcs"
+        mc:Ignorable="d"
+        Title="LightingAndVentUI" Height="436.4" Width="288.8"  Background="#F0F0F0" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" Activated="Window_Activated">
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="30"/>
+    </WindowChrome.WindowChrome>
+    <Window.Resources>
+        <ResourceDictionary Source="pack://application:,,,/NodeRevitAddins;component/ResourceDictionary/StylesDictionary.xaml"/>
+    </Window.Resources>
+    <Grid>
+        <Grid VerticalAlignment="Top"  Height="30" Background="#384F79">
+            <StackPanel WindowChrome.IsHitTestVisibleInChrome="True" VerticalAlignment="Center"  Orientation="Horizontal">
+                <TextBlock VerticalAlignment="Center" Foreground="white" Margin=" 8,0,0,0" FontSize="14">Gross Area List</TextBlock>
+                <Button Margin="150,0,0,0" Height="30" Width="40" Click="Close_Click" Style="{StaticResource CloseButton}">
+                    <Button.Background>
+                        <ImageBrush ImageSource="pack://application:,,,/NodeRevitAddins;component/Resources/WhiteX.png"/>
+                    </Button.Background>
+                </Button>
+            </StackPanel>
+        </Grid>
+        <Border Padding="10">
+            <Grid Margin="0,20,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="90"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="50"/>
+                </Grid.RowDefinitions>
+                <StackPanel Orientation="Vertical" Grid.Row="0" Grid.ColumnSpan="2">
+                    <TextBlock Margin="0,10,0,0" Text="Select Area to calculate:" Grid.ColumnSpan="2"/>
+                    <Grid>
+                        <TextBox Name="ListFilter" TextChanged="ListFilter_TextChanged" Padding="1,1,1,1" Margin="0,2,0,0"/>
+                        <TextBlock IsHitTestVisible="False" Text="Search" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0" Foreground="DarkGray">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=ListFilter}" Value="">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </Grid>
+                </StackPanel>
+                <ListBox Margin="0,10,0,0" x:Name="UiAreas" Grid.Column="0" ItemsSource="{Binding}" Grid.Row="1" SelectionMode="Extended" Background="#FFFCFCFC" Grid.ColumnSpan="2"  ItemTemplate="{StaticResource ListboxItemTemp}" ItemContainerStyle="{StaticResource ListBoxItemContainer}"/>
+                
+
+                <Button x:Name="Accept_Button" Grid.Column="0" Grid.Row="2" Content="Accept" Width="90" Height="20" HorizontalAlignment="Right" Margin="0,0,10,0" Click="Accept_Click"/>
+                <Button x:Name="Cancel_Button" Content="Cancel" Grid.Row="2" Width="90" Height="20" Click="Cancel_Clicked" Grid.Column="1"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
